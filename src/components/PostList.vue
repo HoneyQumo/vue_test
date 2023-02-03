@@ -1,13 +1,13 @@
 <template>
-  <transition-group name="posts">
-    <div v-for="post in posts" :key="post.id" class="post__item">
-      <PostItem :post="post" @remove="removePost"/>
-    </div>
+  <transition-group name="post-list">
+    <PostItem v-for="post in posts" :post="post" :key="post.id" @remove="removePost"/>
   </transition-group>
 </template>
 
 <script>
 import PostItem from '@/components/PostItem'
+
+
 export default {
   name: 'PostList',
   components: {PostItem},
@@ -21,37 +21,26 @@ export default {
   methods: {
     removePost(post) {
       this.$emit('remove', post)
-    }
+    },
   },
 }
 </script>
 
 <style scoped>
 
-.post__item {
-  display: flex;
-  align-items: center;
-  width: 600px;
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  border: 1px solid teal;
-  background-color: lightgray;
-}
 
-
-.posts-enter-active,
-.posts-leave-active {
+.post-list-enter-active,
+.post-list-leave-active {
   transition: all 0.4s ease;
 }
 
-.posts-enter-from,
-.posts-leave-to {
+.post-list-enter-from,
+.post-list-leave-to {
   opacity: 0;
   transform: translateY(10px);
 }
 
-.posts-move {
+.post-list-move {
   transition: transform 0.4s ease;
 }
 
