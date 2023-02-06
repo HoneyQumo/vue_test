@@ -4,7 +4,7 @@
 			<input
 					v-focus
 					:value="searchQuery"
-					@input="searchInput"
+					@input="setSearchQuery"
 					type="text"
 					placeholder="Поиск..."
 					class="search"
@@ -16,63 +16,43 @@
 </template>
 
 <script>
-import ky from 'ky'
 import PostList from '@/components/PostList.vue'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 
 export default {
 	components: { PostList },
 	data() {
-		return {
-			searchQuery: '',
-			page: 1,
-			posts: [],
-		}
-	},
-	methods: {
-		searchInput(event) {
-			this.searchQuery = event.target.value
-		},
-		removePost(post) {
-			this.posts = this.posts.filter(p => p.id !== post.id)
-		},
-		async getPosts() {
-			try {
-				this.posts = await ky.get('https://jsonplaceholder.typicode.com/posts', {
-					searchParams: {
-						_limit: 10,
-						_page: this.page,
-					},
-				}).json()
-			} catch (e) {
-				console.log(e.message)
-			}
-		},
-		async loadMorePosts() {
-			try {
-				this.page += 1
-				const loadedPosts = await ky.get('https://jsonplaceholder.typicode.com/posts', {
-					searchParams: {
-						_limit: 10,
-						_page: this.page,
-					},
-				}).json()
-				this.posts = [...this.posts, ...loadedPosts]
-			} catch (e) {
-				console.log(e.message)
-			}
-		},
+		return {}
 	},
 	mounted() {
 		this.getPosts()
 	},
-	computed: {
-		searchedPosts() {
-			return this.posts.filter(post => {
-				return post.title.toLowerCase().search(this.searchQuery.toLowerCase()) !== -1
-			})
+	methods: {
+		...mapMutations({
+			setPosts: 'post/setPosts',
+			setSearchQuery: 'post/setSearchQuery',
+		}),
+		...mapActions({
+			loadMorePosts: 'post/loadMorePosts',
+			getPosts: 'post/getPosts',
+		}),
+		removePost(post) {
+			this.posts = this.posts.filter(p => p.id !== post.id)
 		},
+
 	},
+	computed: {
+		...mapState({
+			searchQuery: state => state.post.searchQuery,
+			page: state => state.post.page,
+			posts: state => state.post.posts,
+		}),
+		...mapGetters({
+			searchedPosts: 'post/searchedPosts',
+		}),
+	},
+
 }
 </script>
 

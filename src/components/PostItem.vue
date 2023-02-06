@@ -4,7 +4,10 @@
       <h4 class="post__title">{{post.id}}. {{ post.title }}</h4>
       <p class="post__desc">{{ post.body }}</p>
     </div>
-    <button class="post__delete" @click="removePost(post)">X</button>
+    <div class="post__buttons">
+			<button class="post__button" @click="$router.push(`/posts/${post.id}`)">Открыть</button>
+			<button class="post__button" @click="removePost(post)">X</button>
+		</div>
   </div>
 </template>
 
@@ -41,9 +44,9 @@ export default {
 
 .post__title {
   font-size: 24px;
-  line-height: 1;
-  margin-bottom: 10px;
+	line-height: 32px;
   font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .post__title:first-letter {
@@ -53,7 +56,12 @@ export default {
 .post__desc {
 }
 
-.post__delete {
+.post__buttons {
+	display: flex;
+	gap: 10px;
+}
+
+.post__button {
   text-align: center;
   font-weight: 600;
   font-size: 16px;
@@ -62,7 +70,6 @@ export default {
   color: teal;
   border: 1px solid teal;
   border-radius: 4px;
-  margin-left: 10px;
   padding: 8px;
 }
 
