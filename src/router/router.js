@@ -26,6 +26,11 @@ const routes = [
 		path: '/store',
 		name: 'store',
 		component: () => import('@/pages/PostPageWithStore')
+	},
+	{
+		path: '/composition',
+		name: 'composition',
+		component: () => import('@/pages/PostPageWithComposition')
 	}
 ]
 
