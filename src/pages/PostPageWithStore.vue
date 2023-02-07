@@ -32,14 +32,12 @@ export default {
 		...mapMutations({
 			setPosts: 'post/setPosts',
 			setSearchQuery: 'post/setSearchQuery',
+			removePost: 'post/removePost',
 		}),
 		...mapActions({
 			loadMorePosts: 'post/loadMorePosts',
 			getPosts: 'post/getPosts',
 		}),
-		removePost(post) {
-			this.posts = this.posts.filter(p => p.id !== post.id)
-		},
 
 	},
 	computed: {

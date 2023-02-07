@@ -23,10 +23,14 @@ export const postModule = {
 		setSearchQuery(state, event) {
 			state.searchQuery = event.target.value
 		},
+		removePost(state, post) {
+			state.posts = state.posts.filter((p) => p.id !== post.id)
+		},
 	},
 
 	actions: {
 		async getPosts({ state }) {
+			state.page = 1
 			try {
 				state.posts = await ky.get('https://jsonplaceholder.typicode.com/posts', {
 					searchParams: {

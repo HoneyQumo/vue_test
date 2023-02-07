@@ -16,9 +16,15 @@ export function usePosts(page) {
 			console.log(e.message)
 		}
 	}
+
+	const removePost = (post) => {
+		posts.value = posts.value.filter((p) => p.id !== post.id)
+	}
+
 	onMounted(fetching)
 
 	return {
-		posts
+		posts,
+		removePost
 	}
 }

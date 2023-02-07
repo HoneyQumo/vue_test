@@ -27,7 +27,7 @@ export default {
 	setup(props) {
 		const page = ref(1)
 
-		const { posts } = usePosts(page)
+		const { posts, removePost } = usePosts(page)
 		const { searchQuery, searchedPosts } = useSearchPosts(posts)
 		const { loadMorePosts } = useLoadMorePosts(posts, page)
 
@@ -35,7 +35,8 @@ export default {
 			posts,
 			searchQuery,
 			searchedPosts,
-			loadMorePosts
+			loadMorePosts,
+			removePost
 		}
 	},
 }
